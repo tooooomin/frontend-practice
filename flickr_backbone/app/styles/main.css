@@ -1,0 +1,84 @@
+@charset "UTF-8";
+/* モーダル設定CSS */
+.modal {
+  display: none;
+}
+
+.modal_body {
+  position: fixed;
+  z-index: 1000;
+  background: #000;
+  left: 50%;
+  top: 0%;
+}
+
+p.btns {
+  display: inline;
+}
+
+/* 
+ * ボタンのオプショション等
+ *
+ */
+.btn {
+  display: inline-block;
+  width: 25%;
+  margin-bottom: 0;
+  font-weight: 400;
+  text-align: center;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+}
+
+.btn_default {
+  color: white;
+  background-color: #428bca;
+  border-color: #357ebd;
+}
+.btn_default:hover {
+  text-decoration: none;
+  background: #357ebd;
+}
+
+.btn_primary {
+  color: black;
+  background-color: white;
+  border-color: black;
+}
+.btn_primary:hover {
+  text-decoration: none;
+  background: #357ebd;
+}
+
+#search_area {
+  text-align: center;
+  width: 100%;
+}
+
+#photo_area {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.search_box {
+  border: 2px solid #bdc3c7;
+  color: #34495e;
+  font-family: "Lato", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.467;
+  padding: 8px;
+  height: 15px;
+  width: 60%;
+  -webkit-appearance: none;
+  border-radius: 6px;
+  box-shadow: none;
+  -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
+  transition: border .25s linear, color .25s linear, background-color .25s linear;
+}
+
+/*# sourceMappingURL=main.css.map */

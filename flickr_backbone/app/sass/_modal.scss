@@ -1,0 +1,19 @@
+/* モーダル設定CSS */
+
+// 初期状態で大きい画像を非表示
+.modal {
+  display: none;
+}
+
+.modal_body {
+  position: fixed;
+  // 写真を上に重ねる
+  z-index: 1000;
+  background: #000;
+  left: 50%; 
+  top: 0%; 
+}
+
+p.btns {
+  display: inline;
+}

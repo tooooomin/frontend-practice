@@ -1,0 +1,49 @@
+/* 
+ * ボタンのオプショション等
+ *
+ */
+
+// ボタンのデザイン
+.btn {
+  display: inline-block;
+  width: 25%;
+  margin-bottom: 0;
+  font-weight: 400;
+  text-align: center;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+}
+
+// hoverした時のmixin
+@mixin hoverColor($hoverColor) {
+  text-decoration:none;
+  background:$hoverColor;
+}
+
+// ボタンの色のmixin
+@mixin btnColor($buttonTextColor, $buttonColor, $buttonBorderColor) {
+  color: $buttonTextColor;
+  background-color: $buttonColor;
+  border-color: $buttonBorderColor;
+}
+
+.btn_default {
+  @include btnColor(#fff, #428bca, #357ebd);
+
+  &:hover {
+    @include hoverColor(#357ebd);
+  }
+}
+
+.btn_primary {
+  @include btnColor(#000, #fff, #000);
+
+  &:hover {
+    @include hoverColor(#357ebd);
+  }
+}
