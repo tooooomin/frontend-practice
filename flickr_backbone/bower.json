@@ -6,7 +6,9 @@
     "modernizr": "~2.6.2",
     "jquery": "~1.10.2",
     "lightbox2": "~2.7.1",
-    "flat-ui": "*"
+    "flat-ui": "*",
+    "backbone": "~1.1.2",
+    "underscore": "~1.6.0"
   },
   "devDependencies": {}
 }

@@ -41,7 +41,10 @@ module.exports = function(grunt) {
             app: {
                 src: ['<%= config.app %>/*.html'],
                 ignorePath: '<%= config.app %>/',
-                exclude: ['<%= config.app %>/bower_components/fontawesome/', '<%= config.app %>/bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap.js']
+                exclude: [
+                '<%= config.app %>/bower_components/fontawesome/',
+                '<%= config.app %>/bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap.js'
+                ]
             }
         },
         connect: {
@@ -104,6 +107,7 @@ module.exports = function(grunt) {
             all: [
                 'Gruntfile.js',
                 '<%= config.app %>/scripts/{,*/}*.js',
+                // '<%= config.app %>/scripts/**/*.js',
                 '!<%= config.app %>/scripts/vendor/*',
                 'test/spec/{,*/}*.js'
             ]

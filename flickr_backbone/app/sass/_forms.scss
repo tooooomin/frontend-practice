@@ -1,0 +1,23 @@
+/**
+ * Form関連設定CSS 
+ */
+
+// 検索ボックスが表示されている場所
+#search_area {
+  text-align: center;
+  width: 100%;
+}
+
+// 検索ボックスの設定
+.search_box {
+  border: 2px solid #bdc3c7;
+  color: #34495e;
+  font-size: 15px;
+  padding: 8px;
+  height: 15px;
+  width: 60%;
+  -webkit-appearance: none;
+  border-radius: 6px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
