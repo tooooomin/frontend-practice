@@ -14,21 +14,20 @@
 </head>
 <body>
 
-<script type="text/template" id="task-template">
-  <%- title %>
-</script>
-
 <div id="search_area">
-  <input type="text" id="search" class="search" name="text" class="search_box" placeholder="検索したい画像は？">
+  <input type="text" id="search" class="search_box" name="text" class="search_box" placeholder="検索したい画像は？">
   <button id="btn" type="button" class="btn btn_default">Search</button>
 </div>
 
-<div id="photo_area">
-  <div id="result"></div>
+<div class="photo_area">
 </div>
 
-<script type="text/template" id="photo_result">
-  <%- photo %>
+<script type="text/template" id="photoResult">
+<% _.each(photos, function(photo){%>
+<a href='http://farm<%= photo.farm %>.static.flickr.com/<%= photo.server %>/<%= photo.id %>_<%= photo.secret %>_c.jpg'>
+  <img src='http://farm<%= photo.farm %>.static.flickr.com/<%= photo.server %>/<%= photo.id %>_<%= photo.secret %>_m.jpg' width='100' height='100'>
+</a>
+<%}); %>
 </script>
 
 <!-- bower:js -->
@@ -38,6 +37,6 @@
 <script src="bower_components/backbone/backbone.js"></script>
 <!-- endbower -->
 <script src="bower_components/lightbox2/js/lightbox.js"></script>
-<script src="scripts/main1.js"></script>
+<script src="scripts/main.js"></script>
 </body>
 </html>

@@ -6,97 +6,66 @@
  */
 (function($, window, document) {
 
-  $(function() {
+  // View
+  var SearchView = Backbone.View.extend({
+    el: 'body',
+    events: {
+      'click .btn': 'search'
+    },
+    initialize: function() {
+      // 4. APIの通信が完了すると、modelのsyncイベントが発火する
+      this.listenTo(this.model, 'sync', this.render);
+      // *. エラーの場合
+      this.listenTo(this.model, 'error', this.renderError);
+    },
+    search: function() {
+      // 検索ワードをinputタグから取得する
+      var query = $('.search').val();
+      // 検索ワードをModelに引き渡す
+      this.model.search(query);
+    },
+    // template: _.template($('#photo_result').html()),
+    render: function() {
+      console.log('成功')
+      // modelに格納されたAPIのレスポンスを取り出す
+      var photos = this.model.attributes.photos.photo;
+      // DOMを指定の要素に追加する
+      var template = _.template($('#photoResult').html(), {photos: photos});
+      this.$el.find('.photo_area').html(template);
+      return this;
+    },
+    renderError : function() {
+      console.log('失敗')
+    }
+  });
 
-    var search_tag = "";
-    var photoList = "";
-
-    // 画面サイズの判定を呼び出し、縦横で表示を変える（予定）
-    getWindowSize(photoList);
-
-    // 検索ボタンをクリックした時の挙動
-    $('#btn').on('click', function(){
-      // フォームに入力された値を所得する
-      search_tag = htmlEncode($('#search').val());
-
-      var options = {};
-      options.url = 'https://api.flickr.com/services/rest/';
-      options.method = 'GET';
-
-      options.params = {
+  // Model
+  var SearchModel = Backbone.Model.extend({
+    initialize: function() {
+      // 初期化処理
+    },
+    url: function() {
+      return 'https://api.flickr.com/services/rest/';
+    },
+    // searchメソッドでAPIを実行
+    search: function(query) {
+      this.fetch({
+        data: {
           method: 'flickr.photos.search',
-          per_page: 20,
+          per_page: 10,
           tags: 'instagramapp',
-          text: search_tag ,
+          text: query,
           api_key: '63fc702b559001bbbc654780592650dd',
           format: 'json',
           nojsoncallback: 1
-      };
-
-      requestSearch(options);
-
-    });
-
-  });
-
-  // encodeしたい値をtextで受け取り、innerHTMLでreturn
-  function htmlEncode(value){
-    return $('<div/>').text(value).html();
-  }
-
-  // 画面サイズ判定
-  function getWindowSize(photoList) {
-
-    var isLandscape = false; // 縦横判定のフラグ
-    var $win = $(window);
-    $win.on('resize', function(){
-      if($win.width() > $win.height()) {
-        // 1.横画面
-        isLandscape = false;
-        console.log(isLandscape);
-      } else {
-        // 2.縦画面
-        isLandscape = true;
-        console.log(isLandscape);
-        // portraitRendring(photoList);
-      }
-    })
-    .trigger('resize');
-  }
-
-  // 縦表示のレンダリング
-  function portraitRendring(photoList) {
-
-      var file = "";
-      var tag = "";
-
-      photoList.forEach(function(index) {
-        console.log(index);
-        file = "http://farm" + index.farm + ".static.flickr.com/" + index.server + "/" + index.id + "_" + index.secret + "_" + "c" +".jpg";
-        // 表示される画像に多きファイルのリンクとlightboxを表示するためのオプションを追加
-        tag += "<a id='large_pic' href='" + file + "' data-lightbox='roadtrip'><img src='" + file + "' width='100' height='100'></a>";
+        }
       });
-      $('#result').empty().append(tag);
-  }
+    }
+  });
+  var searchModel = new SearchModel();
 
-  var isInit = false;
-
-  // flickrから画像を所得する
-  function requestSearch(options) {
-    $.ajax({
-      type: options.method,
-      url: options.url,
-      data: options.params
-    })
-    .done(function(data) {
-
-      // 縦表示のレンダリングをする（横画面未実装）
-      portraitRendring(data.photos.photo);
-
-    })
-    .fail(function() {
-      console.log("失敗");
-    });
-  }
+  var searchView = new SearchView({
+    model : new SearchModel()
+  });
 
 }(window.jQuery, window, document));
