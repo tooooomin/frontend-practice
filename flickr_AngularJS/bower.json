@@ -1,0 +1,10 @@
+{
+  "name": "flicker",
+  "private": true,
+  "dependencies": {
+    "modernizr": "~2.6.2",
+    "jquery": "~1.10.2",
+    "lightbox2": "~2.7.1",
+    "angular": "~1.2.19"
+  }
+}

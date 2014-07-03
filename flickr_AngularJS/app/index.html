@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja" ng-app>
+<head>
+<meta charset="utf-8">
+<title>Flicker Angular</title>
+<!-- bower:css -->
+<!-- endbower -->
+<link rel="stylesheet" href="styles/main.css">
+<link rel="stylesheet" href="bower_components/lightbox2/css/lightbox.css" />
+</head>
+<body>
+<div ng-controller="mainCtrl">
+
+  <form ng-submit="doSearch()" name="from" id="search-area">
+    <input type="text" class="search-box js-search" ng-model="query" required>
+    <input type="submit" class="btn btn-default" value="検索" ng-disabled="from.$invalid">
+  </form>
+
+  <div ng-show="photoUrlList.length" class="photo-area">
+    <div ng-repeat="photoUrl in photoUrlList" class="inline-block">
+      <a ng-href="{{photoUrl}}" rel="lightbox[imagegroup]">
+        <img ng-src="{{photoUrl}}" width="100" height="100">
+      </a>
+    </div>
+  </div>
+
+<!-- bower:js -->
+<script src="bower_components/jquery/jquery.js"></script>
+<script src="bower_components/modernizr/modernizr.js"></script>
+<!-- endbower -->
+<script src="bower_components/lightbox2/js/lightbox.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+</html>

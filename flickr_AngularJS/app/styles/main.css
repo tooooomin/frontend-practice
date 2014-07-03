@@ -1,0 +1,69 @@
+@charset "UTF-8";
+/**
+ * ボタンのオプショション等
+ */
+.btn {
+  display: inline-block;
+  width: 25%;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  line-height: 1.42857143;
+  margin-bottom: 0;
+  padding: 6px 12px;
+  background-image: none;
+  font-weight: 400;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.btn-default {
+  border-color: #357ebd;
+  background-color: #428bca;
+  color: white;
+}
+.btn-default:hover {
+  background: #357ebd;
+  text-decoration: none;
+}
+
+.btn-primary {
+  border-color: black;
+  background-color: white;
+  color: black;
+}
+.btn-primary:hover {
+  background: #357ebd;
+  text-decoration: none;
+}
+
+/**
+ * Form関連設定CSS 
+ */
+#search-area {
+  text-align: center;
+  width: 100%;
+}
+
+.search-box {
+  border: 2px solid #bdc3c7;
+  color: #34495e;
+  font-size: 15px;
+  padding: 8px;
+  height: 15px;
+  width: 60%;
+  -webkit-appearance: none;
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.photo-area {
+  margin: 10px 0;
+  text-align: center;
+}
+
+/*# sourceMappingURL=main.css.map */
