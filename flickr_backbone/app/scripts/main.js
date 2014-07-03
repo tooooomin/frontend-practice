@@ -10,28 +10,30 @@
   var SearchView = Backbone.View.extend({
     el: 'body',
     events: {
-      'click .btn': 'search'
+      'click .js-btn': 'search',
+      'submit': 'search'
     },
     initialize: function() {
       // 4. APIの通信が完了すると、modelのsyncイベントが発火する
       this.listenTo(this.model, 'sync', this.render);
       // *. エラーの場合
       this.listenTo(this.model, 'error', this.renderError);
-    },
-    search: function() {
+    }
+    search: function(e) {
+      // ブラウザ標準の機能を停止
+      e.preventDefault();
       // 検索ワードをinputタグから取得する
-      var query = $('.search').val();
+      var query = this.$el.find('.js-search').val();
       // 検索ワードをModelに引き渡す
       this.model.search(query);
     },
-    // template: _.template($('#photo_result').html()),
     render: function() {
       console.log('成功')
       // modelに格納されたAPIのレスポンスを取り出す
-      var photos = this.model.attributes.photos.photo;
+      var photoUrlList = this.model.attributes;
       // DOMを指定の要素に追加する
-      var template = _.template($('#photoResult').html(), {photos: photos});
-      this.$el.find('.photo_area').html(template);
+      var photoListHtml = _.template($('.js-photo-result').html(), {photoUrlList: photoUrlList});
+      this.$el.find('.js-photo-area').html(photoListHtml);
       return this;
     },
     renderError : function() {
@@ -44,15 +46,13 @@
     initialize: function() {
       // 初期化処理
     },
-    url: function() {
-      return 'https://api.flickr.com/services/rest/';
-    },
+    url: 'https://api.flickr.com/services/rest/',
     // searchメソッドでAPIを実行
     search: function(query) {
       this.fetch({
         data: {
           method: 'flickr.photos.search',
-          per_page: 10,
+          per_page: 9,
           tags: 'instagramapp',
           text: query,
           api_key: '63fc702b559001bbbc654780592650dd',
@@ -60,9 +60,19 @@
           nojsoncallback: 1
         }
       });
+    },
+    // attributesに格納する値の加工
+    parse: function(response) {
+      var photoUrlList = [];
+      var i = 0;
+      var photos = response.photos.photo;
+      _.each(photos, function(photo){
+        photoUrlList[i] = 'http://farm' + photo.farm + '.static.flickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_m.jpg';
+        i++;
+      });
+      return photoUrlList;
     }
   });
-  var searchModel = new SearchModel();
 
   var searchView = new SearchView({
     model : new SearchModel()

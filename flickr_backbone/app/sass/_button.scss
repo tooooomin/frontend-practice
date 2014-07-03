@@ -31,7 +31,7 @@
   color: $buttonTextColor;
 }
 
-.btn_default {
+.btn-default {
   @include btnColor(#fff, #428bca, #357ebd);
 
   &:hover {
@@ -39,7 +39,7 @@
   }
 }
 
-.btn_primary {
+.btn-primary {
   @include btnColor(#000, #fff, #000);
 
   &:hover {

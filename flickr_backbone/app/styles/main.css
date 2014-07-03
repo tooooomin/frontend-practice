@@ -17,22 +17,22 @@
   white-space: nowrap;
 }
 
-.btn_default {
+.btn-default {
   border-color: #357ebd;
   background-color: #428bca;
   color: white;
 }
-.btn_default:hover {
+.btn-default:hover {
   background: #357ebd;
   text-decoration: none;
 }
 
-.btn_primary {
+.btn-primary {
   border-color: black;
   background-color: white;
   color: black;
 }
-.btn_primary:hover {
+.btn-primary:hover {
   background: #357ebd;
   text-decoration: none;
 }
@@ -40,12 +40,12 @@
 /**
  * Form関連設定CSS 
  */
-#search_area {
+#search-area {
   text-align: center;
   width: 100%;
 }
 
-.search_box {
+.search-box {
   border: 2px solid #bdc3c7;
   color: #34495e;
   font-size: 15px;
@@ -57,7 +57,7 @@
   box-shadow: none;
 }
 
-.photo_area {
+.photo-area {
   margin: 10px 0;
   text-align: center;
 }
