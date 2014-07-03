@@ -18,7 +18,7 @@
       this.listenTo(this.model, 'sync', this.render);
       // *. エラーの場合
       this.listenTo(this.model, 'error', this.renderError);
-    }
+    },
     search: function(e) {
       // ブラウザ標準の機能を停止
       e.preventDefault();
@@ -30,7 +30,8 @@
     render: function() {
       console.log('成功')
       // modelに格納されたAPIのレスポンスを取り出す
-      var photoUrlList = this.model.attributes;
+      var photoUrlList = this.model.attributes.list;
+      console.log(this.model.attributes);
       // DOMを指定の要素に追加する
       var photoListHtml = _.template($('.js-photo-result').html(), {photoUrlList: photoUrlList});
       this.$el.find('.js-photo-area').html(photoListHtml);
@@ -70,12 +71,14 @@
         photoUrlList[i] = 'http://farm' + photo.farm + '.static.flickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_m.jpg';
         i++;
       });
-      return photoUrlList;
+      return {
+        list: photoUrlList
+      }
     }
   });
 
   var searchView = new SearchView({
-    model : new SearchModel()
+    model: new SearchModel()
   });
 
 }(window.jQuery, window, document));
