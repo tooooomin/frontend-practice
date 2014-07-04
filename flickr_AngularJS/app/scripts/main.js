@@ -21,19 +21,19 @@
 
     _getPhotoUrlList(url);
   }
-}]);
 
-functin _getPhotoUrlList(query) {
-    // APIを実行
-  $http.jsonp(url).success(function(data) {
-    // 画像リンクを配列に入れる
-    var photos = data.photos.photo;
-    var photoUrlList = [];
-    angular.forEach(photos, function(photo) {
-      // pushで配列に追加
-      this.push('http://farm' + photo.farm + '.static.flickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_m.jpg');
-    }, photoUrlList);
-    // htmlに送る
-    $scope.photoUrlList = photoUrlList;
-  });
-}
+  function _getPhotoUrlList(url) {
+      // APIを実行
+    $http.jsonp(url).success(function(data) {
+      // 画像リンクを配列に入れる
+      var photos = data.photos.photo;
+      var photoUrlList = [];
+      angular.forEach(photos, function(photo) {
+        // pushで配列に追加
+        this.push('http://farm' + photo.farm + '.static.flickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_m.jpg');
+      }, photoUrlList);
+      // htmlに送る
+      $scope.photoUrlList = photoUrlList;
+    });
+  }
+}]);
