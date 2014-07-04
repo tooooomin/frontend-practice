@@ -107,6 +107,7 @@ module.exports = function(grunt) {
             all: [
                 'Gruntfile.js',
                 '<%= config.app %>/scripts/{,*/}*.js',
+                '!<%= config.app %>/scripts/main.js',
                 // '<%= config.app %>/scripts/**/*.js',
                 '!<%= config.app %>/scripts/vendor/*',
                 'test/spec/{,*/}*.js'
@@ -243,4 +244,7 @@ module.exports = function(grunt) {
         'newer:jshint',
         'build'
     ]);
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.registerTask('default',['sass','watch']);
+    grunt.loadNpmTasks('grunt-contrib-connect');
 };
