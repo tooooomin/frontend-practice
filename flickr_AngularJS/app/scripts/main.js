@@ -4,8 +4,9 @@
  * Copyright (c) 2014 Tomoko Suzuki
  * lightbox2 使用
  */
-var mainCtrl = function($scope, $http) {
-  $scope.doSearch = function() {
+ angular.module('flickr', [])
+ .controller('mainCtrl', ['$scope', '$http', function($scope, $http) {
+  $scope.search = function() {
     var url = 'https://api.flickr.com/services/rest/?'
       + [
         'method=flickr.photos.search',
@@ -17,16 +18,22 @@ var mainCtrl = function($scope, $http) {
         'format=json',
         'jsoncallback=JSON_CALLBACK'
       ].join('&');
-      // APIを実行
-      $http.jsonp(url).success(function(data) {
-        // 画像リンクを配列に入れる
-        var photos = data.photos.photo;
-        var photoUrlList = [];
-        angular.forEach(photos, function(photo) {
-          this.push('http://farm' + photo.farm + '.static.flickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_m.jpg');
-        }, photoUrlList);
-        // htmlに送る
-        $scope.photoUrlList = photoUrlList;
-      });
+
+    _getPhotoUrlList(url);
   }
+}]);
+
+functin _getPhotoUrlList(query) {
+    // APIを実行
+  $http.jsonp(url).success(function(data) {
+    // 画像リンクを配列に入れる
+    var photos = data.photos.photo;
+    var photoUrlList = [];
+    angular.forEach(photos, function(photo) {
+      // pushで配列に追加
+      this.push('http://farm' + photo.farm + '.static.flickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_m.jpg');
+    }, photoUrlList);
+    // htmlに送る
+    $scope.photoUrlList = photoUrlList;
+  });
 }
