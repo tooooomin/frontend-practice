@@ -1,9 +1,19 @@
+// .body {
+//   overflow: hidden;
+// }
+
 .inline-block {
   display: inline-block;
 }
 
+.mg5 {
+  margin: 5px;
+}
+
 // 写真が表示されている場所
 .photo-area {
+  max-height: 500px;
+  overflow: auto;
   margin: 10px 0;
   text-align: center;
 }

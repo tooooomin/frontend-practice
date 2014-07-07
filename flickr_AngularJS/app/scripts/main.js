@@ -1,8 +1,5 @@
 /*
  * Flickr AngularJS
- *
- * Copyright (c) 2014 Tomoko Suzuki
- * lightbox2 使用
  */
 var app =  angular.module('flickr', []);
 
@@ -38,22 +35,46 @@ app.directive('modalDialog', function() {
   }
 });
 
+app.directive('scroller', function($window) {
+  return {
+    restrict: 'A',
+    link: function(scope, element, attrs) {
+      rawElement = element[0];
+      // scrolle event
+      angular.element($window).bind('scroll', function() {
+        if((rawElement.scrollTop + rawElement.offsetHeight) >= rawElement.scrollHeight) {
+          scope.$apply('loadMore()');
+        }
+      });
+    }
+  }
+});
+
 app.controller('mainCtrl', ['$scope', '$http', function($scope, $http) {
   $scope.search = function() {
-    var url = 'https://api.flickr.com/services/rest/?'
-      + [
-        'method=flickr.photos.search',
-        'per_page=9',
-        'tags=instagramapp',
-        // 検索ワードを受け取る
-        'text=' + encodeURIComponent($scope.query),
-        'api_key=63fc702b559001bbbc654780592650dd',
-        'format=json',
-        'jsoncallback=JSON_CALLBACK'
-      ].join('&');
-
-    _getPhotoUrlList(url);
+    var photoUrlList = [];
+    // 検索ページ
+    var i = 1;
+    $scope.loadMore = function() {
+      console.log('load more picture');
+      console.log(i);
+      var url = 'https://api.flickr.com/services/rest/?'
+        + [
+          'method=flickr.photos.search',
+          'per_page=' + 6,
+          'page=' + i,
+          // 検索ワードを受け取る
+          'text=' + encodeURIComponent($scope.query),
+          'api_key=63fc702b559001bbbc654780592650dd',
+          'format=json',
+          'jsoncallback=JSON_CALLBACK'
+        ].join('&');
+      _getPhotoUrlList(url, photoUrlList);
+      i++;
+    };
+    $scope.loadMore();
   }
+
 
   // toggleModal()でmodal-dialogの呼び出し
   $scope.modalShown = false;
@@ -63,16 +84,17 @@ app.controller('mainCtrl', ['$scope', '$http', function($scope, $http) {
     $scope.modalShown = true;
   };
 
-  function _getPhotoUrlList(url) {
+  function _getPhotoUrlList(url, photoUrlList) {
       // APIを実行
     $http.jsonp(url).success(function(data) {
       // 画像リンクを配列に入れる
       var photos = data.photos.photo;
-      var photoUrlList = [];
+      // var photoUrlList = [];
       angular.forEach(photos, function(photo) {
         // pushで配列に追加
         this.push('http://farm' + photo.farm + '.static.flickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_m.jpg');
       }, photoUrlList);
+      console.log(photoUrlList);
       // htmlに送る
       $scope.photoUrlList = photoUrlList;
     });

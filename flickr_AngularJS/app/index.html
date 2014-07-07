@@ -15,9 +15,9 @@
     <input type="submit" class="btn btn-default" value="検索" ng-disabled="from.$invalid">
   </form>
 
-  <div ng-show="photoUrlList.length" class="photo-area">
-    <div ng-repeat="photoUrl in photoUrlList" class="inline-block">
-        <img ng-click="toggleModal()" ng-src="{{photoUrl}}" width="100" height="100">
+  <div ng-show="photoUrlList.length" class="photo-area" scroller>
+    <div ng-repeat="photoUrl in photoUrlList track by $index" class="inline-block mg5">
+      <img ng-click="toggleModal()" ng-src="{{photoUrl}}" width="150" height="150">
     </div>
   </div>
 

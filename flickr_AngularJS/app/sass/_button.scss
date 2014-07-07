@@ -43,6 +43,6 @@
   @include btnColor(#000, #fff, #000);
 
   &:hover {
-    @include hoverColor(#357ebd);
+    @include hoverColor(#6e6e6e);
   }
 }

@@ -33,7 +33,7 @@
   color: black;
 }
 .btn-primary:hover {
-  background: #357ebd;
+  background: #6e6e6e;
   text-decoration: none;
 }
 
@@ -62,7 +62,13 @@
   display: inline-block;
 }
 
+.mg5 {
+  margin: 5px;
+}
+
 .photo-area {
+  max-height: 500px;
+  overflow: auto;
   margin: 10px 0;
   text-align: center;
 }
