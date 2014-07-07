@@ -67,7 +67,7 @@
   text-align: center;
 }
 
-.ng-modal-overlay {
+.modal-overlay {
   position: absolute;
   z-index: 9999;
   top: 0;
@@ -78,7 +78,7 @@
   opacity: 0.8;
 }
 
-.ng-modal-dialog {
+.modal-dialog {
   z-index: 10000;
   position: absolute;
   width: 50%;
@@ -90,20 +90,21 @@
   box-shadow: 4px 4px 80px #000;
 }
 
-.ng-modal-dialog-content {
+.modal-dialog-content {
   padding: 10px;
   text-align: left;
 }
 
-.ng-modal-close {
+.modal-close {
   position: absolute;
   top: 3px;
   right: 5px;
-  padding: 5px;
+  padding: 0 5px;
   cursor: pointer;
   font-size: 120%;
   display: inline-block;
   font-weight: bold;
+  background-color: #ffffff;
 }
 
 /*# sourceMappingURL=main.css.map */

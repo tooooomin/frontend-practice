@@ -27,12 +27,12 @@ app.directive('modalDialog', function() {
       };
     },
     template:
-    '<div class=\'ng-modal\' ng-show=\'show\'>' +
-      '<div class=\'ng-modal-overlay\' ng-click=\'hideModal()\'></div>' +
-      '<div class=\'ng-modal-dialog\' ng-style=\'dialogStyle\'>' +
-        '<div class=\'ng-modal-close\' ng-click=\'hideModal()\'>X</div>' +
+    '<div class="modal" ng-show="show">' +
+      '<div class="modal-overlay" ng-click="hideModal()"></div>' +
+      '<div class="modal-dialog" ng-style="dialogStyle">' +
+        '<div class="modal-close" ng-click="hideModal()">✕</div>' +
         // ng-transclude DOMの挿入点の親要素を指定
-        '<div class=\'ng-modal-dialog-content\' ng-transclude></div>' +
+        '<div class="modal-dialog-content" ng-transclude></div>' +
       '</div>' +
     '</div>'
   }
@@ -53,13 +53,15 @@ app.controller('mainCtrl', ['$scope', '$http', function($scope, $http) {
       ].join('&');
 
     _getPhotoUrlList(url);
-
-    // toggleModal()でmodal-dialogの呼び出し
-    $scope.modalShown = false;
-    $scope.toggleModal = function() {
-      $scope.modalShown = true;
-    };
   }
+
+  // toggleModal()でmodal-dialogの呼び出し
+  $scope.modalShown = false;
+  $scope.toggleModal = function() {
+    var largePhoto = this.photoUrl.replace('_m.jpg', '_z.jpg');
+    $scope.photoUrl = largePhoto;
+    $scope.modalShown = true;
+  };
 
   function _getPhotoUrlList(url) {
       // APIを実行
