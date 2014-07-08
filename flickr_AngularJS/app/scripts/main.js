@@ -3,49 +3,17 @@
  */
 var app =  angular.module('flickr', ['ngResource']);
 
-app.directive('modalDialog', function() {
-  return {
-    restrict: 'E',
-    scope: {
-      show: '='
-    },
-    replace: true,
-    transclude: true,
-    link: function(scope, element, attrs) {
-      scope.dialogStyle = {};
-      if (attrs.width) {
-        scope.dialogStyle.width = attrs.width;
-      };
-      if (attrs.height) {
-        scope.dialogStyle.height = attrs.height;
-      };
-      scope.hideModal = function() {
-        scope.show = false;
-      };
-    },
-    template:
-    '<div class="modal" ng-show="show">' +
-      '<div class="modal-overlay" ng-click="hideModal()"></div>' +
-      '<div class="modal-dialog" ng-style="dialogStyle">' +
-        '<div class="modal-close" ng-click="hideModal()">✕</div>' +
-        // ng-transclude DOMの挿入点の親要素を指定
-        '<div class="modal-dialog-content" ng-transclude></div>' +
-      '</div>' +
-    '</div>'
-  }
-});
-
 app.directive('scroller', function($window) {
   return {
     restrict: 'A',
     link: function(scope, element, attrs) {
       rawElement = element[0];
       // scroll event
-      angular.element($window).bind('scroll', function() {
-        if((window.innerHeight - rawElement.getBoundingClientRect().top) >= rawElement.getBoundingClientRect().height) {
-          console.log(scope.flag);
-          if (scope.flag) {
-            scope.$apply('loadMore()');
+      angular.element($window).on('scroll', function() {
+        var rect = rawElement.getBoundingClientRect();
+        if((window.innerHeight - rect.top) >= rect.height) {
+          if (scope.isReady) {
+            scope.loadMore();
           }
         }
       });
@@ -58,7 +26,7 @@ app.controller('mainCtrl', ['$scope', '$http', '$resource', function($scope, $ht
     var photoUrlList = [];
     var pageNum = 1;
     $scope.loadMore = function() {
-      $scope.flag = false;
+      $scope.isReady = false;
       console.log('load more picture');
       var url = 'https://api.flickr.com/services/rest/?'
         + [
@@ -75,34 +43,33 @@ app.controller('mainCtrl', ['$scope', '$http', '$resource', function($scope, $ht
 
       _getPhotoUrlList(url, photoUrlList);
       pageNum++;
-      $scope.flag = true;
     };
     $scope.loadMore();
   };
 
-
-  // toggleModal()でmodal-dialogの呼び出し
-  $scope.modalShown = false;
-  $scope.toggleModal = function() {
-    var largePhoto = this.photoUrl.replace('_m.jpg', '_z.jpg');
-    $scope.photoUrl = largePhoto;
-    $scope.modalShown = true;
+  // modalの呼び出し
+  $scope.showModal = function() {
+    var getPhotoUrl = this.photoUrl.replace('_m.jpg', '_z.jpg');
+    $scope.largePhotoUrl = getPhotoUrl;
+    $scope.show = true;
+  };
+  $scope.hideModal = function() {
+    $scope.show = false;
   };
 
+  // APIを実行して画像を所得するメソッド
   function _getPhotoUrlList(url, photoUrlList) {
-
     // photoList.jsonを取得
     $scope.getPhotoList = function() {
       $resource('/scripts/photoList.json').get(
         function(data) {
-          var photos = data.photos;
-          angular.forEach(photos, function(photo) {
+          angular.forEach(data.photos, function(photo) {
             // pushで配列に追加
             this.push('http://farm' + photo.farm + '.static.flickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_m.jpg');
           }, photoUrlList);
-          // console.log(photoUrlList);
           // htmlに送る
           $scope.photoUrlList = photoUrlList;
+          $scope.isReady = true;
         }
       );
     };
@@ -117,10 +84,9 @@ app.controller('mainCtrl', ['$scope', '$http', '$resource', function($scope, $ht
     //     // pushで配列に追加
     //     this.push('http://farm' + photo.farm + '.static.flickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_m.jpg');
     //   }, photoUrlList);
-    //   console.log(photoUrlList);
     //   // htmlに送る
     //   $scope.photoUrlList = photoUrlList;
-
+    //   $scope.isReady = true;
     // });
   }
 }]);
