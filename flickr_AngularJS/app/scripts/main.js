@@ -1,7 +1,7 @@
 /*
  * Flickr AngularJS
  */
-var app =  angular.module('flickr', []);
+var app =  angular.module('flickr', ['ngResource']);
 
 app.directive('modalDialog', function() {
   return {
@@ -40,40 +40,45 @@ app.directive('scroller', function($window) {
     restrict: 'A',
     link: function(scope, element, attrs) {
       rawElement = element[0];
-      // scrolle event
+      // scroll event
       angular.element($window).bind('scroll', function() {
-        if((rawElement.scrollTop + rawElement.offsetHeight) >= rawElement.scrollHeight) {
-          scope.$apply('loadMore()');
+        if((window.innerHeight - rawElement.getBoundingClientRect().top) >= rawElement.getBoundingClientRect().height) {
+          console.log(scope.flag);
+          if (scope.flag) {
+            scope.$apply('loadMore()');
+          }
         }
       });
     }
   }
 });
 
-app.controller('mainCtrl', ['$scope', '$http', function($scope, $http) {
+app.controller('mainCtrl', ['$scope', '$http', '$resource', function($scope, $http, $resource) {
   $scope.search = function() {
     var photoUrlList = [];
-    // 検索ページ
-    var i = 1;
+    var pageNum = 1;
     $scope.loadMore = function() {
+      $scope.flag = false;
       console.log('load more picture');
-      console.log(i);
       var url = 'https://api.flickr.com/services/rest/?'
         + [
           'method=flickr.photos.search',
           'per_page=' + 6,
-          'page=' + i,
+          // 検索ページ
+          'page=' + pageNum,
           // 検索ワードを受け取る
           'text=' + encodeURIComponent($scope.query),
           'api_key=63fc702b559001bbbc654780592650dd',
           'format=json',
           'jsoncallback=JSON_CALLBACK'
         ].join('&');
+
       _getPhotoUrlList(url, photoUrlList);
-      i++;
+      pageNum++;
+      $scope.flag = true;
     };
     $scope.loadMore();
-  }
+  };
 
 
   // toggleModal()でmodal-dialogの呼び出し
@@ -85,19 +90,38 @@ app.controller('mainCtrl', ['$scope', '$http', function($scope, $http) {
   };
 
   function _getPhotoUrlList(url, photoUrlList) {
-      // APIを実行
-    $http.jsonp(url).success(function(data) {
-      // 画像リンクを配列に入れる
-      var photos = data.photos.photo;
-      // var photoUrlList = [];
-      angular.forEach(photos, function(photo) {
-        // pushで配列に追加
-        this.push('http://farm' + photo.farm + '.static.flickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_m.jpg');
-      }, photoUrlList);
-      console.log(photoUrlList);
-      // htmlに送る
-      $scope.photoUrlList = photoUrlList;
-    });
+
+    // photoList.jsonを取得
+    $scope.getPhotoList = function() {
+      $resource('/scripts/photoList.json').get(
+        function(data) {
+          var photos = data.photos;
+          angular.forEach(photos, function(photo) {
+            // pushで配列に追加
+            this.push('http://farm' + photo.farm + '.static.flickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_m.jpg');
+          }, photoUrlList);
+          // console.log(photoUrlList);
+          // htmlに送る
+          $scope.photoUrlList = photoUrlList;
+        }
+      );
+    };
+    $scope.getPhotoList();
+
+    // APIを実行
+    // $http.jsonp(url).success(function(data) {
+    //   // 画像リンクを配列に入れる
+    //   var photos = data.photos.photo;
+    //   // var photoUrlList = [];
+    //   angular.forEach(photos, function(photo) {
+    //     // pushで配列に追加
+    //     this.push('http://farm' + photo.farm + '.static.flickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_m.jpg');
+    //   }, photoUrlList);
+    //   console.log(photoUrlList);
+    //   // htmlに送る
+    //   $scope.photoUrlList = photoUrlList;
+
+    // });
   }
 }]);
 

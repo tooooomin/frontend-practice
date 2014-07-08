@@ -67,8 +67,6 @@
 }
 
 .photo-area {
-  max-height: 500px;
-  overflow: auto;
   margin: 10px 0;
   text-align: center;
 }
