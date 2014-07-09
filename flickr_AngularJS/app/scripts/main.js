@@ -23,8 +23,6 @@ app.directive('scroller', function($window) {
 
 app.controller('mainCtrl', ['$scope', '$http', '$resource', function($scope, $http, $resource) {
   $scope.search = function() {
-    var photoUrlList = [];
-    var photoIdList = [];
     var photoList = [];
     var pageNum = 1;
     $scope.loadMore = function() {
@@ -105,7 +103,7 @@ app.controller('mainCtrl', ['$scope', '$http', '$resource', function($scope, $ht
     //   angular.forEach(photos, function(photo) {
     //     // pushで配列に追加
     //         photoUrl = 'http://farm' + photo.farm + '.static.flickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_m.jpg';
-    //         photoList.push({'photoUrl': photoUrl, 'photoId': photo.id, 'like': false});
+    //         photoList.push({'photoUrl': photoUrl, 'photoId': photo.id, 'like': true});
     //   });
     //   // htmlに送る
     //   $scope.photoList = photoList;
