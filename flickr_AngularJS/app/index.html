@@ -18,9 +18,13 @@
   </form>
 
   <!-- photos -->
-  <div ng-show="photoUrlList.length" class="photo-area" scroller>
-    <div ng-repeat="photoUrl in photoUrlList track by $index" class="inline-block mg5">
-      <img ng-click="showModal()" ng-src="{{photoUrl}}" width="150" height="150">
+  <div ng-show="photoList.length" class="photo-area" scroller>
+    <div ng-repeat="photo in photoList track by $index" class="inline-block mg5">
+      <img ng-click="showModal()" ng-src="{{photo.photoUrl}}" width="150" height="150">
+      <p>
+        <button ng-show="photo.like" ng-click="likeButton()" class="btn btn-primary">いいね！</button>
+        <button ng-show="!photo.like" ng-click="likeButton()" class="btn btn-primary">いいね解除</button>
+      </p>
     </div>
   </div>
 
