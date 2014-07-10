@@ -22,8 +22,7 @@
     <div ng-repeat="photo in photoList track by $index" class="inline-block mg5">
       <img ng-click="showModal()" ng-src="{{photo.photoUrl}}" width="150" height="150">
       <p>
-        <button ng-show="photo.like" ng-click="likeButton()" class="btn btn-primary">いいね！</button>
-        <button ng-show="!photo.like" ng-click="likeButton()" class="btn btn-primary">いいね解除</button>
+        <button ng-click="likeButton()" class="btn btn-primary" ng-bind="photo.noLiked ? 'いいね！' : 'いいね解除'"></button>
       </p>
     </div>
   </div>
