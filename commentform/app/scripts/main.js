@@ -8,7 +8,7 @@ commentList = [];
 
 $scope.update = function(user) {
   $scope.master= angular.copy(user);
-  $scope.comments = commentList.concat($scope.master['new']);
+  $scope.comments = commentList.concat($scope.master);
   console.log($scope.comments);
 };
 
