@@ -21,25 +21,50 @@ app.directive('scroller', function($window) {
   }
 });
 
-app.controller('mainCtrl', ['$scope', '$http', '$resource', 'flickrApi', 'getPhotoInfo', 
-  function($scope, $http, $resource, flickrApi, getPhotoInfo) {
+app.controller('mainCtrl', ['$scope', 'getPhotoInfo', function($scope, getPhotoInfo) {
+
+  var photoList = [];
+  var pageNum = 1;
 
   $scope.search = function() {
-    var photoList = [];
-    var pageNum = 1;
-    $scope.loadMore = function() {
-      // $scope.isReady = false;
-
-      // flickrから写真を読み込む
-      // url = flickrApi.url(pageNum, $scope.query);
-      // getPhotoInfo.flickerPhotoList(url, photoList);
-      // jsonから写真を読み込む
-      getPhotoInfo.jsonPhotoInfo(photoList);
-
-      pageNum++;
-    };
+    photoList = [];
+    pageNum = 1;
     $scope.loadMore();
   };
+
+  $scope.loadMore = function() {
+    $scope.isReady = false;
+    $scope.loading = true;
+
+    // flickrから写真を読み込む
+    getPhotoInfo.flickerPhotoInfo().get({
+      pageNum: pageNum,
+      query: $scope.query
+      },
+      function(data){
+        _getPhotoUrl(data.photos.photo)
+    });
+
+    // jsonから写真を読み込む
+    // getPhotoInfo.jsonPhotoInfo().get(function(data){
+    //   _getPhotoUrl(data.photos);
+    // });
+
+    pageNum++;
+  };
+
+  function _getPhotoUrl(photoInfo) {
+    // setTimeout(function(){
+      angular.forEach(photoInfo, function(photo) {
+        // pushで配列に追加
+        photoUrl = 'http://farm' + photo.farm + '.static.flickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_m.jpg';
+        photoList.push({'photoUrl': photoUrl, 'photoId': photo.id, 'noLiked': true});
+      });
+      $scope.photoList = photoList;
+      $scope.isReady = true;
+      $scope.loading = false;
+    // }, 2000);
+  }
 
   // modal
   $scope.showModal = function() {
@@ -58,55 +83,31 @@ app.controller('mainCtrl', ['$scope', '$http', '$resource', 'flickrApi', 'getPho
 
 }]);
 
-app.factory('flickrApi', function() {
-  return {
-    url: function(pageNum, query) {
-      url = 'https://api.flickr.com/services/rest/?'
-        + [
-          'method=flickr.photos.search',
-          'per_page=' + 6,
-          // 検索ページ
-          'page=' + pageNum,
-          // 検索ワードを受け取る
-          'text=' + encodeURIComponent(query),
-          'api_key=63fc702b559001bbbc654780592650dd',
-          'format=json',
-          'jsoncallback=JSON_CALLBACK'
-        ].join('&');
-      return url;
-    }
-  };
-});
+app.factory('getPhotoInfo', ['$resource', function($resource) {
+  url = 'https://api.flickr.com/services/rest/?'
+    + [
+      'method=flickr.photos.search',
+      'per_page=6',
+      // 検索ページ
+      'page=:pageNum',
+      // 検索ワードを受け取る
+      'text=:query',
+      'api_key=63fc702b559001bbbc654780592650dd',
+      'format=json',
+      'jsoncallback=JSON_CALLBACK'
+    ].join('&');
 
-app.factory('getPhotoInfo', function($resource, $http) {
   return {
-    jsonPhotoInfo: function(photoList) {
-      $scope.isReady = false;
-      $resource('/scripts/photoList.json').get(
-        function(data) {
-          angular.forEach(data.photos, function(photo) {
-            photoUrl = 'http://farm' + photo.farm + '.static.flickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_m.jpg';
-            photoList.push({'photoUrl': photoUrl, 'photoId': photo.id, 'noLiked': true});
-          });
-          $scope.photoList = photoList;
-          $scope.isReady = true;
-        }
-      );
+    jsonPhotoInfo: function() {
+      return $resource('/scripts/photoList.json', {}, {
+        get: {method:'GET', isArray: false}
+      });
     },
-    flickerPhotoList: function(url, photoList) {
-      $scope.isReady = false;
-      $http.jsonp(url).success(function(data) {
-        var photos = data.photos.photo;
-        angular.forEach(photos, function(photo) {
-          // pushで配列に追加
-          photoUrl = 'http://farm' + photo.farm + '.static.flickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_m.jpg';
-          photoList.push({'photoUrl': photoUrl, 'photoId': photo.id, 'noLiked': true});
-        });
-        // htmlに送る
-        $scope.photoList = photoList;
-        $scope.isReady = true;
+    flickerPhotoInfo: function() {
+      return $resource(url, {}, {
+        get: {method:'JSONP', isArray: false}
       });
     }
   }
-});
+}]);
 
