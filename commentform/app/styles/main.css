@@ -1,0 +1,113 @@
+@charset "UTF-8";
+/**
+ * ボタンのオプショション等
+ */
+.btn {
+  display: inline-block;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  line-height: 1.42857143;
+  margin-bottom: 0;
+  padding: 6px 12px;
+  background-image: none;
+  font-weight: 400;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.btn-default {
+  border-color: #357ebd;
+  background-color: #428bca;
+  color: white;
+}
+.btn-default:hover {
+  background: #357ebd;
+  text-decoration: none;
+}
+
+.btn-primary {
+  border-color: black;
+  background-color: white;
+  color: black;
+}
+.btn-primary:hover {
+  background: #6e6e6e;
+  text-decoration: none;
+}
+
+/**
+ * Form関連設定CSS 
+ */
+#search-area {
+  text-align: center;
+  width: 100%;
+}
+
+.search-box {
+  border: 2px solid #bdc3c7;
+  color: #34495e;
+  font-size: 15px;
+  padding: 8px;
+  height: 15px;
+  width: 60%;
+  -webkit-appearance: none;
+  border-radius: 6px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.mg5 {
+  margin: 5px;
+}
+
+.photo-area {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.modal-overlay {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  opacity: 0.8;
+}
+
+.modal-dialog {
+  z-index: 10000;
+  position: fixed;
+  width: 90%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  background-color: #fff;
+  box-shadow: 4px 4px 80px #000;
+}
+
+.modal-dialog-content {
+  padding: 10px;
+  text-align: left;
+}
+
+.modal-close {
+  position: absolute;
+  top: 3px;
+  right: 5px;
+  padding: 0 5px;
+  cursor: pointer;
+  font-size: 120%;
+  display: inline-block;
+  font-weight: bold;
+  background-color: #ffffff;
+}
+
+/*# sourceMappingURL=main.css.map */

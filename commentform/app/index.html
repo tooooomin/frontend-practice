@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja" ng-app="comment">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+  content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<title>Angular</title>
+<!-- bower:css -->
+<!-- endbower -->
+<link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+<div ng-controller="commentController">
+
+  <form>
+    <input type="text" ng-model="user.comment" />
+    <button ng-click="reset()">reset</button>
+    <button ng-click="update(user)">submint</button>
+  </form>
+  <pre>comment = "{{user.comment}}"</pre>
+  <pre>postcomment = "{{master}}"</pre>
+
+  <div ng-repeat="comment in comments">
+    {{comment}}
+  </div>
+
+</div>
+
+
+<!-- bower:js -->
+<script src="bower_components/jquery/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<!-- endbower -->
+<script src="scripts/main.js"></script>
+</body>
+</html>
