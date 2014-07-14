@@ -4,17 +4,24 @@
 var app =  angular.module('comment', []);
 app.controller('commentController', ['$scope', function($scope) {
 $scope.master = {};
-commentList = [];
+$scope.commentList = [];
 
-$scope.update = function(user) {
-  $scope.master= angular.copy(user);
-  $scope.comments = commentList.concat($scope.master);
-  console.log($scope.comments);
+$scope.add = function() {
+  $scope.commentList.push($scope.comment);
+  $scope.comment = "";
+  console.log($scope.commentList);
 };
 
 $scope.reset = function() {
-  $scope.user = angular.copy($scope.master);
-}
-$scope.reset();
+  if(window.confirm('内容をリセットしていいですか？')) {
+    $scope.comment = "";
+  } else {
+    return false;
+  }
+};
+
+$scope.delete = function($index) {
+  $scope.commentList.splice($index, 1);
+};
 
 }]);
