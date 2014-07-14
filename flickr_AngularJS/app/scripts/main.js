@@ -12,9 +12,7 @@ app.directive('scroller', function($window) {
       angular.element($window).on('scroll', function() {
         var rect = rawElement.getBoundingClientRect();
         if((window.innerHeight - rect.top) >= rect.height) {
-          if (scope.isReady) {
-            scope.loadMore();
-          }
+          scope.loadMore();
         }
       });
     }
@@ -25,67 +23,33 @@ app.controller('mainCtrl', ['$scope', 'getPhotoInfo', function($scope, getPhotoI
 
   var photoList = [];
   var pageNum = 1;
+  $scope.isReady = true;
 
   $scope.search = function() {
     photoList = [];
     pageNum = 1;
-    $scope.loadMore();
+    $scope.loadMore(); 
   };
 
   $scope.loadMore = function() {
-    $scope.isReady = false;
     $scope.loading = true;
-
-    // flickrから写真を読み込む
-    // getPhotoInfo.flickerPhotoInfo().get({
-    //   pageNum: pageNum,
-    //   query: $scope.query
-    //   },
-    //   function(data){
-    //     _getPhotoUrl(data.photos.photo)
-    // });
-
-    // つくってみたやつ
-    // getPhotoInfo.flickerPhotoInfo({
-    //   pageNum : pageNum,
-    //   query : $scope.query
-    //   }, function(){
-    //     callback : function(){
-    //       $scope.isReady = true;
-    //       $scope.loading = false;
-    //     }
-    //   }
-    // });
-    getPhotoInfo.flickerPhotoInfo({
-      pageNum : pageNum,
-      query : $scope.query,
-      callback : function(photoUrlList) {
-        $scope.photoList = photoUrlList;
-        $scope.isReady = true;
-        $scope.loading = false;
-      }
-    });
-
-    // jsonから写真を読み込む
-    // getPhotoInfo.jsonPhotoInfo().get(function(data){
-    //   _getPhotoUrl(data.photos);
-    // });
+    // ロードが終わったら次の読み込みをする
+    if($scope.isReady) {
+      $scope.isReady = false;
+      // flickrから写真を読み込む
+      getPhotoInfo({
+        pageNum  : pageNum,
+        query    : $scope.query,
+        callback : function(photoUrlList) {
+          $scope.photoList = photoUrlList;
+          $scope.isReady = true;
+          $scope.loading = false;
+        }
+      }, photoList);
+    };
 
     pageNum++;
   };
-
-  function _getPhotoUrl(photoInfo) {
-    // setTimeout(function(){
-      angular.forEach(photoInfo, function(photo) {
-        // pushで配列に追加
-        photoUrl = 'http://farm' + photo.farm + '.static.flickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_m.jpg';
-        photoList.push({'photoUrl': photoUrl, 'photoId': photo.id, 'noLiked': true});
-      });
-      $scope.photoList = photoList;
-      $scope.isReady = true;
-      $scope.loading = false;
-    // }, 2000);
-  }
 
   // modal
   $scope.showModal = function() {
@@ -105,24 +69,24 @@ app.controller('mainCtrl', ['$scope', 'getPhotoInfo', function($scope, getPhotoI
 }]);
 
 app.factory('getPhotoInfo', ['$http', '$resource', function($http, $resource) {
-
   var options = {};
+  function _getApiUrl(options) {
+    url = 'https://api.flickr.com/services/rest/?'
+      + [
+        'method=flickr.photos.search',
+        'per_page=6',
+        // 検索ページ
+        'page=' + options.pageNum,
+        // 検索ワードを受け取る
+        'text=' + options.query,
+        'api_key=63fc702b559001bbbc654780592650dd',
+        'format=json',
+        'jsoncallback=JSON_CALLBACK'
+      ].join('&');
+    return url;
+  };
 
-  url = 'https://api.flickr.com/services/rest/?'
-    + [
-      'method=flickr.photos.search',
-      'per_page=6',
-      // 検索ページ
-      'page=1',
-      // 検索ワードを受け取る
-      'text=cat',
-      'api_key=63fc702b559001bbbc654780592650dd',
-      'format=json',
-      'jsoncallback=JSON_CALLBACK'
-    ].join('&');
-
-  function _getPhotoUrl(photoInfo) {
-    photoList = [];
+  function _getPhotoUrl(photoInfo, photoList) {
     angular.forEach(photoInfo, function(photo) {
       photoUrl = 'http://farm' + photo.farm + '.static.flickr.com/' + photo.server +'/' + photo.id + '_' + photo.secret + '_m.jpg';
       photoList.push({'photoUrl': photoUrl, 'photoId': photo.id, 'noLiked': true});
@@ -130,33 +94,12 @@ app.factory('getPhotoInfo', ['$http', '$resource', function($http, $resource) {
     return photoList;
   };
 
-    // var params = {
-    //   method       : flickr.photos.search,
-    //   per_page     : 6,
-    //   page         : pageNum,
-    //   text         : query,
-    //   api_key      : 63fc702b559001bbbc654780592650dd,
-    //   format       : json,
-    //   jsoncallback : JSON_CALLBACK
-    // };
-
-  return {
-    jsonPhotoInfo: function() {
-      return $resource('/scripts/photoList.json', {}, {
-        get: {method:'GET', isArray: false}
-      });
-    },
-    // flickerPhotoInfo: function() {
-    //   return $resource(url, {}, {
-    //     get: {method:'JSONP', isArray: false}
-    //   });
-    // },
-    flickerPhotoInfo: function(options) {
-      $http.jsonp(url).success(function(data) {
-        photoList = _getPhotoUrl(data.photos.photo);
-        options.callback(photoList);
-      });
-    }
+  return function(options, photoList) {
+    $http.jsonp(_getApiUrl(options)).success(function(data) {
+      photoList = _getPhotoUrl(data.photos.photo, photoList);
+      options.callback(photoList);
+    });
   }
+
 }]);
 
