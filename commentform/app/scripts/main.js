@@ -15,8 +15,6 @@ $scope.add = function() {
 $scope.reset = function() {
   if(window.confirm('内容をリセットしていいですか？')) {
     $scope.comment = "";
-  } else {
-    return false;
   }
 };
 

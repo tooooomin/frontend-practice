@@ -69,21 +69,20 @@ app.controller('mainCtrl', ['$scope', 'getPhotoInfo', function($scope, getPhotoI
 }]);
 
 app.factory('getPhotoInfo', ['$http', '$resource', function($http, $resource) {
-  var options = {};
+  var url = 'https://api.flickr.com/services/rest';
   function _getApiUrl(options) {
-    url = 'https://api.flickr.com/services/rest/?'
-      + [
-        'method=flickr.photos.search',
-        'per_page=6',
-        // 検索ページ
-        'page=' + options.pageNum,
-        // 検索ワードを受け取る
-        'text=' + options.query,
-        'api_key=63fc702b559001bbbc654780592650dd',
-        'format=json',
-        'jsoncallback=JSON_CALLBACK'
-      ].join('&');
-    return url;
+    var params = {
+      params : {
+        method       : 'flickr.photos.search',
+        per_page     : 6,
+        page         : options.pageNum,
+        text         : options.query,
+        api_key      : '63fc702b559001bbbc654780592650dd',
+        format       : 'json',
+        jsoncallback : 'JSON_CALLBACK'
+      }
+    }
+    return params;
   };
 
   function _getPhotoUrl(photoInfo, photoList) {
@@ -95,7 +94,7 @@ app.factory('getPhotoInfo', ['$http', '$resource', function($http, $resource) {
   };
 
   return function(options, photoList) {
-    $http.jsonp(_getApiUrl(options)).success(function(data) {
+    $http.jsonp(url, _getApiUrl(options)).success(function(data) {
       photoList = _getPhotoUrl(data.photos.photo, photoList);
       options.callback(photoList);
     });

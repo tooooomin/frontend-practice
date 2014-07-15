@@ -15,7 +15,7 @@
   <form novalidate name="commentForm">
 
     <div class="textareaBox">
-      <p class="textCounter textR"><span ng-if="comment.length == null">0</span>{{comment.length}}/100文字まで</p>
+      <p class="textCounter textR">{{comment.length || 0}}/100文字まで</p>
       <textarea class="textarea" type="text" name="comment" ng-model="comment" required ng-maxlength="100" maxlength="100"></textarea>
       <p class="mg0 textR"><button class="btn canselBtn" ng-click="reset()">キャンセル</button>
       <button class="btn submitBtn" ng-click="add()" ng-disabled="commentForm.$invalid">投稿する</button></p>
