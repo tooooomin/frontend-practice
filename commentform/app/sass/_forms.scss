@@ -28,11 +28,22 @@
   background: #f9eee2;
 }
 
+.textBox {
+  word-wrap: break-word;
+  padding: 10px 30px;
+}
+
 .commentLine {
   background-color: #F5DEB3;
   margin: 0;
+  padding: 0;
 }
 
 li.comment {
   list-style-type: none;
+}
+
+.name {
+  padding: 20px 0 0;
+  margin: 0;
 }

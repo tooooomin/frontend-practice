@@ -36,6 +36,10 @@
   &:hover {
     @include hoverColor(#6a9936);
   }
+
+  &:disabled {
+    color: #6e6e6e;
+  }
 }
 
 .canselBtn {

@@ -25,6 +25,9 @@
   background: #6a9936;
   text-decoration: none;
 }
+.submitBtn:disabled {
+  color: #6e6e6e;
+}
 
 .canselBtn {
   border-color: #e3cdb1;
@@ -64,13 +67,24 @@
   background: #f9eee2;
 }
 
+.textBox {
+  word-wrap: break-word;
+  padding: 10px 30px;
+}
+
 .commentLine {
   background-color: #F5DEB3;
   margin: 0;
+  padding: 0;
 }
 
 li.comment {
   list-style-type: none;
+}
+
+.name {
+  padding: 20px 0 0;
+  margin: 0;
 }
 
 .mg0 {
@@ -79,6 +93,10 @@ li.comment {
 
 .textR {
   text-align: right;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none;
 }
 
 body {
