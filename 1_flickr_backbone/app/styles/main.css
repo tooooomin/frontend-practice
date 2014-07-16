@@ -54,6 +54,7 @@
   width: 60%;
   -webkit-appearance: none;
   border-radius: 6px;
+  -webkit-box-shadow: none;
   box-shadow: none;
 }
 

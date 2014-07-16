@@ -3,85 +3,65 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
     grunt.initConfig({
         config: {
-            app: './4_parse_commentform/app',
-            dist: './4_parse_commentform/dist'
+            dir: './',
+            prj1: './1_flickr_backbone/app',
+            prj2: './2_flickr_AngularJS/app',
+            prj3: './3_commentform/app',
+            prj4: './4_parse_commentform/app'
         },
         watch: {
             js: {
-                files: ['<%= config.app %>/scripts/{,*/}*.js'],
-                tasks: ['jshint'],
-                options: {
-                    livereload: true
-                }
-            },
-            // compass: {
-            //     files: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
-            //     tasks: ['compass:server', 'autoprefixer']
-            // },
-            sass: {
-                files: ['<%= config.app %>/sass/{,*/}*.{scss,sass}'],
-                tasks: ['newer:sass', 'autoprefixer']
-            },
-            // styles: {
-            //     files: ['<%= config.app %>/styles/{,*/}*.css'],
-            //     tasks: ['autoprefixer']
-            // },
-            livereload: {
-                options: {
-                    livereload: '<%= connect.options.livereload %>'
-                },
                 files: [
-                    '<%= config.app %>/{,*}*.html',
-                    '<%= config.app %>/styles/{,*/}*.css',
-                    '<%= config.app %>/images/{,*}*'
-                ]
+                    '<%= config.prj1 %>/scripts/{,*/}*.js',
+                    '<%= config.prj2 %>/scripts/{,*/}*.js',
+                    '<%= config.prj3 %>/scripts/{,*/}*.js',
+                    '<%= config.prj4 %>/scripts/{,*/}*.js'
+                ],
+                tasks: ['jshint'],
+            },
+            sass: {
+                files: [
+                    '<%= config.prj1 %>/sass/{,*/}*.{scss,sass}',
+                    '<%= config.prj2 %>/sass/{,*/}*.{scss,sass}',
+                    '<%= config.prj3 %>/sass/{,*/}*.{scss,sass}',
+                    '<%= config.prj4 %>/sass/{,*/}*.{scss,sass}'
+                ],
+                tasks: ['newer:sass']
             }
         },
         bowerInstall: {
             app: {
-                src: ['<%= config.app %>/*.html'],
-                ignorePath: '<%= config.app %>/',
-                exclude: [
-                '<%= config.app %>/bower_components/fontawesome/',
-                '<%= config.app %>/bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap.js'
+                src: [
+                    '<%= config.prj1 %>/*.html',
+                    '<%= config.prj2 %>/*.html',
+                    '<%= config.prj3 %>/*.html',
+                    '<%= config.prj4 %>/*.html'
+                ],
+                ignorePath: [
+                    '<%= config.prj1 %>/',
+                    '<%= config.prj2 %>/',
+                    '<%= config.prj3 %>/',
+                    '<%= config.prj4 %>/'
                 ]
+                // ,
+                // exclude: [
+                //     '<%= config.prj4 %>/bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap.js'
+                // ]
             }
         },
         connect: {
             options: {
                 port: 9000,
-                livereload: 35729,
                 hostname: 'localhost'
             },
-            livereload: {
+            app: {
                 options: {
                     open: true,
-                    base: [
-                        '<%= config.app %>'
-                    ]
-                }
-            },
-            dist: {
-                options: {
-                    open: true,
-                    base: '<%= config.dist %>',
-                    livereload: false
+                    base: '<%= config.dir %>'
                 }
             }
         },
-        clean: {
-            dist: {
-                files: [{
-                    dot: true,
-                    src: [
-                        '<%= config.dist %>/*',
-                        '!<%= config.dist %>/.git*'
-                    ]
-                }]
-            },
-        },
         jshint: {
-            // via http://www.jshint.com/docs/options/
             options: {
                 curly: true,
                 eqeqeq: true,
@@ -106,113 +86,35 @@ module.exports = function(grunt) {
             },
             all: [
                 'Gruntfile.js',
-                '<%= config.app %>/scripts/{,*/}*.js',
-                '!<%= config.app %>/scripts/main.js',
-                // '<%= config.app %>/scripts/**/*.js',
-                '!<%= config.app %>/scripts/vendor/*',
+                '<%= config.prj1 %>/scripts/{,*/}*.js',
+                '<%= config.prj2 %>/scripts/{,*/}*.js',
+                '<%= config.prj3 %>/scripts/{,*/}*.js',
+                '<%= config.prj4 %>/scripts/{,*/}*.js',
+                '!<%= config.prj1 %>/scripts/main.js',
+                '!<%= config.prj2 %>/scripts/main.js',
+                '!<%= config.prj3 %>/scripts/main.js',
+                '!<%= config.prj4 %>/scripts/main.js',
+                '!<%= config.prj1 %>/scripts/vendor/*',
+                '!<%= config.prj2 %>/scripts/vendor/*',
+                '!<%= config.prj3 %>/scripts/vendor/*',
+                '!<%= config.prj4 %>/scripts/vendor/*',
                 'test/spec/{,*/}*.js'
             ]
         },
-        compass: {
-            options: {
-                sassDir: '<%= config.app %>/sass',
-                cssDir: '<%= config.app %>/styles',
-                generatedImagesDir: '<%= config.app %>/images/generated',
-                imagesDir: '<%= config.app %>/images',// The directory where you keep your images.
-                javascriptsDir: '<%= config.app %>/scripts',// The directory where you keep your JavaScript files.
-                fontsDir: '<%= config.app %>/styles/fonts',// The directory where you keep your fonts.
-                importPath: '<%= config.app %>/bower_components',
-                httpImagesPath: '/images',
-                httpGeneratedImagesPath: '/images/generated',
-                httpFontsPath: '/styles/fonts',
-                relativeAssets: false,
-                assetCacheBuster: false
-            },
-            dist: {
-                options: {
-                    debugInfo: false,
-                    generatedImagesDir: '<%= config.dist %>/images/generated'
-                }
-            },
-            server: {
-                options: {
-                    debugInfo: true
-                }
-            }
-        },
         sass: {
-            dist: {
+            app: {
                 options: {
                     style: 'expanded',
                     sourcemap: true
                 },
                 files: {
-                    '<%= config.app %>/styles/main.css': ['<%= config.app %>/sass/main.scss']
+                    '<%= config.prj1 %>/styles/main.css': '<%= config.prj1 %>/sass/main.scss',
+                    '<%= config.prj2 %>/styles/main.css': '<%= config.prj2 %>/sass/main.scss',
+                    '<%= config.prj3 %>/styles/main.css': '<%= config.prj3 %>/sass/main.scss',
+                    '<%= config.prj4 %>/styles/main.css': '<%= config.prj4 %>/sass/main.scss'
                 }
             }
-        },
-        autoprefixer: {
-            options: {
-                browsers: ['last 2 version', 'ie 8', 'ie 9'],
-                map: true
-            },
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= config.app %>/styles/',
-                    src: '{,*/}*.css',
-                    dest: '<%= config.app %>/styles/'
-                }]
-            }
-        },
-        imagemin: {
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= config.app %>/images',
-                    src: '{,*/}*.{gif,jpeg,jpg,png}',
-                    dest: '<%= config.dist %>/images'
-                }]
-            }
-        },
-        copy: {
-            dist: {
-                files: [{
-                    expand: true,
-                    dot: true,
-                    cwd: '<%= config.app %>',
-                    dest: '<%= config.dist %>',
-                    src: [
-                        '*.{ico,png,txt}',
-                        '.htaccess',
-                        'images/{,*/}*.webp',
-                        '{,*/}*.html',
-                        'styles/fonts/{,*/}*.*',
-                        'data/*.*',
-                        'bower_components/{,*/}*.js'
-                    ]
-                }]
-            }
-        },
-        concat: {
-            dist: {
-                files: {
-                    '<%= config.dist %>/scripts/main.js': ['<%= config.app %>/scripts/main.js']
-                }
-            }
-        },
-        cssmin: {
-            dist: {
-                files: {
-                    '<%= config.dist %>/styles/main.css': ['<%= config.app %>/styles/main.css']
-                }
-            }
-        },
-        uglify: {
-            dist: {
-                files: '<%= concat.dist.files %>'
-            }
-        },
+        }
     });
 
     grunt.registerTask('serve', function(target) {
@@ -222,22 +124,13 @@ module.exports = function(grunt) {
 
         grunt.task.run([
             'bowerInstall',
-            'autoprefixer',
-            'connect:livereload',
             'watch'
         ]);
     });
     
     grunt.registerTask('build', [
         'bowerInstall',
-        'clean:dist',
-        'sass',
-        'autoprefixer',
-        'concat',
-        'cssmin',
-        'imagemin',
-        'uglify',
-        'copy:dist'
+        'sass'
     ]);
 
     grunt.registerTask('default', [
@@ -245,6 +138,6 @@ module.exports = function(grunt) {
         'build'
     ]);
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.registerTask('default',['sass']);
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.registerTask('default',['sass', 'watch', 'connect']);
 };
