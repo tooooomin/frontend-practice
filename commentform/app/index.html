@@ -23,8 +23,8 @@
       <li class="comment" ng-repeat="comment in commentList">
         <div class="textBox">
           <h4 class="name">sampleName</h4>
-          <p class="text" ng-bind-template="{{comment.comment}}"></p>
-          <time class="time"  ng-bind-template="{{comment.addTime | date:'MM月dd日 h:mm'}}"></time>
+          <p class="text" ng-bind="comment.comment"></p>
+          <time class="time"  ng-bind="comment.addTime | date:'MM月dd日 HH:mm'"></time>
           <a href="javascript:;" ng-click="delete($index)">削除</a>
         </div>
       </li>

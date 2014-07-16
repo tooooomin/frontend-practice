@@ -21,6 +21,8 @@ app.controller('commentController', ['$scope', function($scope) {
   };
 
   $scope.delete = function($index) {
-    $scope.commentList.splice($index, 1);
+    if(window.confirm('削除していいですか？')) {
+      $scope.commentList.splice($index, 1);
+    }
   };
 }]);

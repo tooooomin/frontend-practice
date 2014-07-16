@@ -38,8 +38,8 @@ app.controller('mainCtrl', ['$scope', 'getPhotoInfo', function($scope, getPhotoI
       $scope.isReady = false;
       // flickrから写真を読み込む
       getPhotoInfo({
-        pageNum  : pageNum,
-        query    : $scope.query,
+        page  : pageNum,
+        text  : $scope.query,
         callback : function(photoUrlList) {
           $scope.photoList = photoUrlList;
           $scope.isReady = true;
@@ -70,19 +70,17 @@ app.controller('mainCtrl', ['$scope', 'getPhotoInfo', function($scope, getPhotoI
 
 app.factory('getPhotoInfo', ['$http', '$resource', function($http, $resource) {
   var url = 'https://api.flickr.com/services/rest';
-  function _getApiUrl(options) {
+  function _getApiConfig(options) {
     var params = {
-      params : {
-        method       : 'flickr.photos.search',
-        per_page     : 6,
-        page         : options.pageNum,
-        text         : options.query,
-        api_key      : '63fc702b559001bbbc654780592650dd',
-        format       : 'json',
-        jsoncallback : 'JSON_CALLBACK'
-      }
+      method       : 'flickr.photos.search',
+      per_page     : 6,
+      page         : 'search page',
+      text         : 'search text',
+      api_key      : '63fc702b559001bbbc654780592650dd',
+      format       : 'json',
+      jsoncallback : 'JSON_CALLBACK'
     }
-    return params;
+    return angular.extend(params, options);
   };
 
   function _getPhotoUrl(photoInfo, photoList) {
@@ -94,7 +92,7 @@ app.factory('getPhotoInfo', ['$http', '$resource', function($http, $resource) {
   };
 
   return function(options, photoList) {
-    $http.jsonp(url, _getApiUrl(options)).success(function(data) {
+    $http.jsonp(url, {params : _getApiConfig(options)}).success(function(data) {
       photoList = _getPhotoUrl(data.photos.photo, photoList);
       options.callback(photoList);
     });
