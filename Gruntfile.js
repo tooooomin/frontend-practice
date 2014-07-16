@@ -3,8 +3,8 @@ module.exports = function(grunt) {
     require('load-grunt-tasks')(grunt);
     grunt.initConfig({
         config: {
-            app: 'app',
-            dist: 'dist'
+            app: './4_parse_commentform/app',
+            dist: './4_parse_commentform/dist'
         },
         watch: {
             js: {
@@ -245,6 +245,6 @@ module.exports = function(grunt) {
         'build'
     ]);
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.registerTask('default',['sass','watch']);
+    grunt.registerTask('default',['sass']);
     grunt.loadNpmTasks('grunt-contrib-connect');
 };

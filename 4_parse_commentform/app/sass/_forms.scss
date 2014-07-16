@@ -1,0 +1,42 @@
+/**
+ * Form関連設定CSS 
+ */
+
+.textareaBox {
+  display: block;
+  padding: 4px 12px 12px;
+  background: #c7a989;
+}
+
+.textCounter {
+  margin: 0;
+  color: white;
+  font-size: small;
+}
+
+// 検索ボックスの設定
+.textarea {
+  border: 2px solid #bdc3c7;
+  color: #34495e;
+  font-size: 15px;
+  height: 35px;
+  width: 100%;
+  border-radius: 6px;
+  box-shadow: none;
+  background: #f9eee2;
+}
+
+.textBox {
+  word-wrap: break-word;
+  padding: 10px 30px;
+}
+
+.commentLine {
+  background-color: #F5DEB3;
+  margin: 0;
+  padding: 0;
+}
+
+li.comment {
+  list-style-type: none;
+}

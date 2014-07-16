@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja" ng-app="comment">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+  content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<title>Angular</title>
+<!-- bower:css -->
+<!-- endbower -->
+<link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+
+<div ng-controller="commentController">
+  <form novalidate name="commentForm">
+    <div class="textareaBox">
+      <p class="textCounter textR" ng-bind-template="{{comment.length || 0}}/100文字まで"></p>
+      <textarea class="textarea" name="comment" ng-model="comment" required ng-maxlength="100" maxlength="100"></textarea>
+      <p class="mg0 textR"><button class="btn canselBtn" ng-click="reset()">キャンセル</button>
+      <button class="btn submitBtn" ng-click="add()" ng-disabled="commentForm.$invalid">投稿する</button></p>
+    </div>
+    <ul class="commentLine" ng-hide="commentList.length === 0" ng-cloak>
+      <li class="comment" ng-repeat="comment in commentList">
+        <div class="textBox">
+          <h4 class="name">sampleName</h4>
+          <p class="text" ng-bind="comment.comment"></p>
+          <time class="time"  ng-bind="comment.addTime | date:'MM月dd日 HH:mm'"></time>
+          <a href="javascript:;" ng-click="delete($index)">削除</a>
+        </div>
+      </li>
+    </ul>
+
+<ul class="commentLine">
+  <li class="comment" ng-repeat="comment in parseCommentList">
+    <div class="textBox">
+      <h4 class="name">{{comment.userName}}</h4>
+      <p class="text" ng-bind="comment.comment"></p>
+      <time class="time"  ng-bind="comment.createdAt"></time>
+      <a href="javascript:;" ng-click="delete($index)">削除</a>
+    </div>
+  </li>
+</ul>
+
+  </form>
+</div>
+
+
+
+<!-- bower:js -->
+<script src="../../bower_components/jquery/jquery.js"></script>
+<script src="http://www.parsecdn.com/js/parse-1.2.12.min.js"></script>
+<script src="../../bower_components/angular/angular.js"></script>
+<!-- endbower -->
+<script src="scripts/main.js"></script>
+</body>
+</html>

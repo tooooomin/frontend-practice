@@ -1,0 +1,166 @@
+@charset "UTF-8";
+/**
+ * ボタンのオプショション等
+ */
+.btn {
+  display: inline-block;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  line-height: 1.42857143;
+  margin-bottom: 0;
+  padding: 6px 12px;
+  background-image: none;
+  font-weight: 400;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.submitBtn {
+  border-color: #75a740;
+  background-color: #75a740;
+  color: white;
+}
+.submitBtn:hover {
+  background: #6a9936;
+  text-decoration: none;
+}
+.submitBtn:disabled {
+  color: #6e6e6e;
+}
+
+.canselBtn {
+  border-color: #e3cdb1;
+  background-color: #e3cdb1;
+  color: #88653a;
+}
+.canselBtn:hover {
+  background: #cbb393;
+  text-decoration: none;
+}
+
+/**
+ * Form関連設定CSS 
+ */
+.textareaBox {
+  display: block;
+  padding: 4px 12px 12px;
+  background: #c7a989;
+}
+
+.textCounter {
+  margin: 0;
+  color: white;
+  font-size: small;
+}
+
+.textarea {
+  border: 2px solid #bdc3c7;
+  color: #34495e;
+  font-size: 15px;
+  height: 35px;
+  width: 100%;
+  border-radius: 6px;
+  box-shadow: none;
+  background: #f9eee2;
+}
+
+.textBox {
+  word-wrap: break-word;
+  padding: 10px 30px;
+}
+
+.commentLine {
+  background-color: #F5DEB3;
+  margin: 0;
+  padding: 0;
+}
+
+li.comment {
+  list-style-type: none;
+}
+
+.mg0 {
+  margin: 0;
+}
+
+.textR {
+  text-align: right;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none;
+}
+
+/*
+Copyright (c) 2009, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 3.0.0
+build: 1549
+*/
+html {
+  color: #000;
+  background: #FFF;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6,
+pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+  margin: 0;
+  padding: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+fieldset, img {
+  border: 0;
+}
+
+address, caption, cite, code, dfn, em, strong, th, var {
+  font-style: normal;
+  font-weight: normal;
+}
+
+li {
+  list-style: none;
+}
+
+caption, th {
+  text-align: left;
+}
+
+q:before, q:after {
+  content: '';
+}
+
+abbr, acronym {
+  border: 0;
+  font-variant: normal;
+}
+
+sup {
+  vertical-align: text-top;
+}
+
+sub {
+  vertical-align: text-bottom;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+input, textarea, select {
+  *font-size: 100%;
+}
+
+legend {
+  color: #000;
+}
+
+/*# sourceMappingURL=main.css.map */

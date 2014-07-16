@@ -1,0 +1,12 @@
+{
+  "name": "codereview",
+  "private": true,
+  "dependencies": {
+    "jquery": "~1.10.2",
+    "angular": "~1.2.19",
+    "angular-resource": "~1.2.19",
+    "backbone": "~1.1.2",
+    "underscore": "~1.6.0",
+    "lightbox2": "~2.7.1"
+  }
+}
