@@ -19,7 +19,7 @@
       <p class="mg0 textR"><button class="btn canselBtn" ng-click="reset()">キャンセル</button>
       <button class="btn submitBtn" ng-click="add()" ng-disabled="commentForm.$invalid">投稿する</button></p>
     </div>
-    <ul class="commentLine" ng-cloak ng-hide="commentList.length === 0">
+    <ul class="commentLine" ng-hide="commentList.length === 0" ng-cloak>
       <li class="comment" ng-repeat="comment in commentList">
         <div class="textBox">
           <h4 class="name">sampleName</h4>
