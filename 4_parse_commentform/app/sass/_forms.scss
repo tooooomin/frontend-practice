@@ -2,41 +2,43 @@
  * Form関連設定CSS 
  */
 
-.textareaBox {
+.comment__form {
   display: block;
   padding: 4px 12px 12px;
-  background: #c7a989;
+  background: #ffffff;
 }
 
-.textCounter {
+.comment__text--count {
   margin: 0;
-  color: white;
   font-size: small;
 }
 
-// 検索ボックスの設定
-.textarea {
-  border: 2px solid #bdc3c7;
+.comment__text {
   color: #34495e;
   font-size: 15px;
   height: 35px;
   width: 100%;
   border-radius: 6px;
   box-shadow: none;
-  background: #f9eee2;
+  background: #ffffff;
 }
 
-.textBox {
+.comment__item_block {
   word-wrap: break-word;
   padding: 10px 30px;
 }
 
-.commentLine {
-  background-color: #F5DEB3;
+.comment__list {
+  background-color: #fff;
   margin: 0;
   padding: 0;
 }
 
-li.comment {
+.comment__list_child {
   list-style-type: none;
+}
+
+.comment__item--icon > img {
+  border-radius: 50%;
+  float: left;
 }

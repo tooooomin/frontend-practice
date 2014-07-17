@@ -52,7 +52,15 @@ module.exports = function(grunt) {
         connect: {
             options: {
                 port: 9000,
-                hostname: 'localhost'
+                hostname: 'localhost',
+                // middleware: function(connect, options) {
+                //     var headers = setHeader({
+                //     'Access-Control-Allow-Origin': '*',
+                //     'Access-Control-Allow-Headers': '*',
+                //     'Access-Control-Allow-Methods': 'GET, OPTIONS'
+                //     });
+                //     return [headers];
+                // }
             },
             app: {
                 options: {

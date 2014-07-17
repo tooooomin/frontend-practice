@@ -1,45 +1,43 @@
 /**
  * comment form
- * parse
+ * parse.com
  */
 
 var app =  angular.module('comment', []);
 app.controller('commentController', ['$scope', '$http', function($scope, $http) {
   $scope.commentList = [];
   $scope.parseCommentList = [];
-
-  $http.get('https://api.parse.com/1/classes/comments', {
+  var url = 'https://api.parse.com/1/classes/comments/';
+  var config = {
     headers: { 
       'X-Parse-Application-Id':'LNsBUdj2n4fufd2L1X020F34Bd0qzLw54Lx9i0Kh',
       'X-Parse-REST-API-Key':'EVD6APhTISTC4jTi6iBCsVgdeebBUkRab0wT6X2Q'
     }
-  }).success(function(data, status) {
-    console.log(data.results);
-    $scope.parseCommentList = data.results;
-  });
+  };
+
+  $scope.show = function() {
+    $http.get(url, config).success(function(data, status) {
+      $scope.parseCommentList = data.results;
+    });
+  }
+  $scope.show();
 
   $scope.add = function() {
-    var date = new Date();
-    addTime = date.getTime();
-    $scope.commentList.push({'comment': $scope.comment, 'addTime': addTime});
-
-    // $http.post('https://api.parse.com/1/classes/comments', {
-    //   headers: { 
-    //     'X-Parse-Application-Id':'LNsBUdj2n4fufd2L1X020F34Bd0qzLw54Lx9i0Kh',
-    //     'X-Parse-REST-API-Key':'EVD6APhTISTC4jTi6iBCsVgdeebBUkRab0wT6X2Q'
-    //   },
-    //   params: {
-    //     where: {
-    //       userName : 'tomoko',
-    //       comment  : $scope.comment
-    //     }
-    //   }
-    // }).success(function(data, status) {
-    //   console.log('成功');
-    // });
-
-    $scope.comment = "";
-    console.log($scope.commentList);
+    if(!$scope.isUpdate) {
+      $scope.isUpdate = true;
+      $http.post(url, {
+        userName : 'tomoko',
+        comment  : $scope.comment
+      }, config).success(function(data, status) {
+        $scope.show();
+        $scope.isUpdate = false;
+      }).error(function(data, status) {
+        $scope.add();
+      });
+      $scope.comment = "";
+    } else {
+      console.log('投稿中');
+    }
   };
 
   $scope.reset = function() {
@@ -48,10 +46,18 @@ app.controller('commentController', ['$scope', '$http', function($scope, $http) 
     }
   };
 
-  $scope.delete = function($index) {
+  $scope.delete = function(comment) {
     if(window.confirm('削除していいですか？')) {
-      $scope.commentList.splice($index, 1);
+      if(!$scope.isDelete) {
+        $scope.isDelete = true;
+        $http.delete(url + comment.objectId, config).success(function(data, status) {
+          $scope.isDelete = false;
+          console.log('削除しました');
+          $scope.show();
+        });
+      }
     }
   };
+
 }]);
 

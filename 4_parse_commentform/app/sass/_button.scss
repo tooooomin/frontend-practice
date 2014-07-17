@@ -6,12 +6,11 @@
 .btn {
   display: inline-block;
   border: 1px solid transparent;
-  border-radius: 4px;
+  border-radius: 3px;
   line-height: 1.42857143;
   margin-bottom: 0;
   padding: 6px 12px;
   background-image: none;
-  font-weight: 400;
   font-size: 14px;
   text-align: center;
   white-space: nowrap;
@@ -31,21 +30,21 @@
 }
 
 .submitBtn {
-  @include btnColor(#fff, #75a740, #75a740);
+  @include btnColor(#fff, #58cfbd, #58cfbd);
 
   &:hover {
-    @include hoverColor(#6a9936);
+    @include hoverColor(#58cfbd);
   }
 
   &:disabled {
-    color: #6e6e6e;
+    @include btnColor(#cacaca, #999999, #999999);
   }
 }
 
 .canselBtn {
-  @include btnColor(#88653a, #e3cdb1, #e3cdb1);
+  @include btnColor(#000000, #ffffff, #000000);
 
   &:hover {
-    @include hoverColor(#cbb393);
+    @include hoverColor(#ffffff);
   }
 }
