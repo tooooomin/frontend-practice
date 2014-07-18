@@ -9,9 +9,9 @@ app.controller('commentController', ['$scope', '$http', function($scope, $http) 
   $scope.parseCommentList = [];
   var url = 'https://api.parse.com/1/classes/comments/';
   var config = {
-    headers: { 
-      'X-Parse-Application-Id':'LNsBUdj2n4fufd2L1X020F34Bd0qzLw54Lx9i0Kh',
-      'X-Parse-REST-API-Key':'EVD6APhTISTC4jTi6iBCsVgdeebBUkRab0wT6X2Q'
+    headers : { 
+      'X-Parse-Application-Id' : 'LNsBUdj2n4fufd2L1X020F34Bd0qzLw54Lx9i0Kh',
+      'X-Parse-REST-API-Key'   : 'EVD6APhTISTC4jTi6iBCsVgdeebBUkRab0wT6X2Q'
     }
   };
 
@@ -21,6 +21,29 @@ app.controller('commentController', ['$scope', '$http', function($scope, $http) 
     });
   }
   $scope.show();
+
+  var page = 0;
+  var limit = 1;
+  $scope.more = function() {
+      console.log(page);
+    $http.get(url, {
+    headers : { 
+      'X-Parse-Application-Id' : 'LNsBUdj2n4fufd2L1X020F34Bd0qzLw54Lx9i0Kh',
+      'X-Parse-REST-API-Key'   : 'EVD6APhTISTC4jTi6iBCsVgdeebBUkRab0wT6X2Q'
+    },
+    params : {
+      'order'   : '-createdAt',
+      'skip'  : page,
+      'limit'   : limit,
+      'include' : 'post'
+    }
+    }).success(function(data, status) {
+      // console.log(data.results);
+      // $scope.commentList = data.results;
+
+    });
+  page += limit;
+  }
 
   $scope.add = function() {
     if(!$scope.isUpdate) {
