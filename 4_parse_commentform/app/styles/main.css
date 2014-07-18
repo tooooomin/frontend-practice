@@ -1,8 +1,28 @@
 @charset "UTF-8";
-/**
- * ボタンのオプショション等
- */
-.btn {
+/*==========  comment  ==========*/
+/*==========  button  ==========*/
+.comment__form {
+  display: block;
+  padding: 20px 20px 15px;
+  background: #fff;
+}
+
+.comment__form--count {
+  margin: 0;
+  font-size: 11px;
+}
+
+.comment__form--text {
+  color: #34495e;
+  font-size: 15px;
+  height: 35px;
+  width: 100%;
+  border-radius: 6px;
+  box-shadow: none;
+  background: #fff;
+}
+
+.comment__form--input_btn {
   display: inline-block;
   border: 1px solid transparent;
   border-radius: 3px;
@@ -13,87 +33,131 @@
   font-size: 14px;
   text-align: center;
   white-space: nowrap;
-}
-
-.submitBtn {
   border-color: #58cfbd;
   background-color: #58cfbd;
   color: white;
 }
-.submitBtn:hover {
-  background: #58cfbd;
-  text-decoration: none;
+.comment__form--input_btn:hover {
+  display: inline-block;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  line-height: 1.42857143;
+  margin-bottom: 0;
+  padding: 6px 12px;
+  background-image: none;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+  border-color: #58cfbd;
+  background-color: #58cfbd;
+  color: white;
 }
-.submitBtn:disabled {
+.comment__form--input_btn:disabled {
+  display: inline-block;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  line-height: 1.42857143;
+  margin-bottom: 0;
+  padding: 6px 12px;
+  background-image: none;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
   border-color: #999999;
   background-color: #999999;
   color: #cacaca;
 }
 
-.canselBtn {
+.comment__form--cansel_btn {
+  display: inline-block;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  line-height: 1.42857143;
+  margin-bottom: 0;
+  padding: 6px 12px;
+  background-image: none;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
   border-color: black;
   background-color: white;
   color: black;
 }
-.canselBtn:hover {
-  background: white;
-  text-decoration: none;
+.comment__form--cansel_btn:hover {
+  display: inline-block;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  line-height: 1.42857143;
+  margin-bottom: 0;
+  padding: 6px 12px;
+  background-image: none;
+  font-size: 14px;
+  text-align: center;
+  white-space: nowrap;
+  border-color: black;
+  background-color: white;
+  color: black;
 }
 
-/**
- * Form関連設定CSS 
- */
-.comment__form {
-  display: block;
-  padding: 4px 12px 12px;
-  background: #ffffff;
-}
-
-.comment__text--count {
-  margin: 0;
-  font-size: small;
-}
-
-.comment__text {
-  color: #34495e;
-  font-size: 15px;
-  height: 35px;
-  width: 100%;
-  border-radius: 6px;
-  box-shadow: none;
-  background: #ffffff;
-}
-
-.comment__item_block {
-  word-wrap: break-word;
-  padding: 10px 30px;
-}
-
-.comment__list {
+.comment__item_list {
   background-color: #fff;
-  margin: 0;
+  margin: 15px 0;
   padding: 0;
 }
 
-.comment__list_child {
+.comment__item_block {
   list-style-type: none;
 }
 
-.comment__item--icon > img {
-  border-radius: 50%;
-  float: left;
+.comment__item_block--inner {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: auto;
+  padding: 15px 0;
+  margin: 0 20px;
+  border-bottom: dotted 1px #000066;
 }
 
-.mg0 {
+.comment__item--icon {
+  width: 15%;
+  text-align: center;
+}
+.comment__item--icon img {
+  border-radius: 50%;
+  padding: 0 10px;
+  width: 30px;
+}
+
+.comment__item_block--child {
+  padding: 0 5px;
+  word-break: break-all;
+  font-size: 11px;
+  width: 85%;
+  line-height: 1.36;
+}
+.comment__item_block--child .comment__item--name {
+  font-weight: bold;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+.comment__item_block--child .comment__item--time {
+  margin-top: 5px;
+  float: left;
+}
+.comment__item_block--child .comment__item--delete {
+  display: inline-block;
+  float: right;
+  font-size: 15px;
+  color: #999999;
+}
+
+.m__margin--0 {
   margin: 0;
 }
 
-.textR {
+.m__text--right {
   text-align: right;
-}
-
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-  display: none;
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/ 

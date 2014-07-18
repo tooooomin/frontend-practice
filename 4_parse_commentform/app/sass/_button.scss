@@ -1,9 +1,5 @@
-/**
- * ボタンのオプショション等
- */
-
-// ボタンのデザイン
-.btn {
+/*==========  button  ==========*/
+@mixin m__btn--color($buttonTextColor, $buttonColor, $buttonBorderColor) {
   display: inline-block;
   border: 1px solid transparent;
   border-radius: 3px;
@@ -14,37 +10,7 @@
   font-size: 14px;
   text-align: center;
   white-space: nowrap;
-}
-
-// hoverした時のmixin
-@mixin hoverColor($hoverColor) {
-  background:$hoverColor;
-  text-decoration:none;
-}
-
-// ボタンの色のmixin
-@mixin btnColor($buttonTextColor, $buttonColor, $buttonBorderColor) {
   border-color: $buttonBorderColor;
   background-color: $buttonColor;
   color: $buttonTextColor;
-}
-
-.submitBtn {
-  @include btnColor(#fff, #58cfbd, #58cfbd);
-
-  &:hover {
-    @include hoverColor(#58cfbd);
-  }
-
-  &:disabled {
-    @include btnColor(#cacaca, #999999, #999999);
-  }
-}
-
-.canselBtn {
-  @include btnColor(#000000, #ffffff, #000000);
-
-  &:hover {
-    @include hoverColor(#ffffff);
-  }
 }
