@@ -15,12 +15,12 @@ app.controller('commentController', ['$scope', '$http', function($scope, $http) 
     }
   };
 
-  $scope.show = function() {
-    $http.get(url, config).success(function(data, status) {
-      $scope.parseCommentList = data.results;
-    });
-  }
-  $scope.show();
+  // $scope.show = function() {
+  //   $http.get(url, config).success(function(data, status) {
+  //     $scope.parseCommentList = data.results;
+  //   });
+  // }
+  // $scope.show();
 
   var page = 0;
   var limit = 1;
@@ -38,12 +38,12 @@ app.controller('commentController', ['$scope', '$http', function($scope, $http) 
       'include' : 'post'
     }
     }).success(function(data, status) {
-      // console.log(data.results);
-      // $scope.commentList = data.results;
-
+      $scope.parseCommentList = $scope.parseCommentList.concat(data.results);
+      console.log($scope.parseCommentList);
     });
   page += limit;
   }
+  $scope.more();
 
   $scope.add = function() {
     if(!$scope.isUpdate) {
