@@ -14,34 +14,25 @@ app.controller('commentController', ['$scope', '$http', function($scope, $http) 
       'X-Parse-REST-API-Key'   : 'EVD6APhTISTC4jTi6iBCsVgdeebBUkRab0wT6X2Q'
     }
   };
+  var skipPage = 0;
+  var limit = 4;
 
-  // $scope.show = function() {
-  //   $http.get(url, config).success(function(data, status) {
-  //     $scope.parseCommentList = data.results;
-  //   });
-  // }
-  // $scope.show();
-
-  var page = 0;
-  var limit = 1;
   $scope.more = function() {
-      console.log(page);
-    $http.get(url, {
-    headers : { 
-      'X-Parse-Application-Id' : 'LNsBUdj2n4fufd2L1X020F34Bd0qzLw54Lx9i0Kh',
-      'X-Parse-REST-API-Key'   : 'EVD6APhTISTC4jTi6iBCsVgdeebBUkRab0wT6X2Q'
-    },
-    params : {
-      'order'   : '-createdAt',
-      'skip'  : page,
-      'limit'   : limit,
-      'include' : 'post'
-    }
-    }).success(function(data, status) {
+    var subConfig = {
+      params : {
+        'order'   : '-createdAt',
+        'skip'    : skipPage,
+        'limit'   : limit,
+        'include' : 'post'
+      }
+    };
+    $http.get(url, angular.extend(config, subConfig)).success(function(data, status) {
       $scope.parseCommentList = $scope.parseCommentList.concat(data.results);
-      console.log($scope.parseCommentList);
+      if (data.results.length < limit) {
+        $scope.isRoadMore = true;
+      }
     });
-  page += limit;
+    skipPage += limit;
   }
   $scope.more();
 
@@ -52,8 +43,8 @@ app.controller('commentController', ['$scope', '$http', function($scope, $http) 
         userName : 'tomoko',
         comment  : $scope.comment
       }, config).success(function(data, status) {
-        $scope.show();
         $scope.isUpdate = false;
+        window.location.reload();
       }).error(function(data, status) {
         $scope.add();
       });
@@ -75,8 +66,7 @@ app.controller('commentController', ['$scope', '$http', function($scope, $http) 
         $scope.isDelete = true;
         $http.delete(url + comment.objectId, config).success(function(data, status) {
           $scope.isDelete = false;
-          console.log('削除しました');
-          $scope.show();
+          window.location.reload();
         });
       }
     }
