@@ -56,7 +56,7 @@
           per_page: 9,
           tags: 'instagramapp',
           text: query,
-          api_key: '63fc702b559001bbbc654780592650dd',
+          api_key: 'my api key',
           format: 'json',
           nojsoncallback: 1
         }
